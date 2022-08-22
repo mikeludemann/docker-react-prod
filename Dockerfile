@@ -18,5 +18,15 @@ COPY . .
 # Build the application
 RUN yarn build
 
+# ------------------------------------------------
+
+FROM httpd:alpine
+
+# Server path
+WORKDIR /var/www/html
+
+# Copy
+COPY --from=production /app/build .
+
 # Start the app
 CMD [ "sudo", "service", "apache2", "restart" ]
